@@ -3,23 +3,47 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Inicio de Sesión</title>
+    <title>Pagina Principal</title>
+    <script src="js/jquery-3.2.1.js" charset="utf-8"></script>
 </head>
 <body>
-    <form action="validar.php" method="post">
-      <label>
-           <p>Nombre de Usuario</p>
-           <input type="text" name="usuario"
-           placeholder="Usuario" required>
-      </label>
-      <br>
-      <label>
-           <p>Contraseña</p>
-           <input type="password" name="password"
-           placeholder="Contraseña" required>
-      </label>
-      <br>
-      <input type="submit" value="Iniciar Sesión">
-   </form>
+    <label>
+        <p>Nombre de Usuario</p>
+        <p><input type="text" id="usuario" placeholder="Usuario",required></p>
+    </label>
+    <br>
+    <label>
+        <p>Contrase~na</p>
+        <p><input type="password" id="password",placeholder="Contrase~na" required></p>
+    </label>
+    <br>
+    <p><button onclick="confirmar()">Iniciar Sesion</button></p>
+    <p><span id="result"></span></p>
+
+    <script>
+        function confirmar() {
+            var user = $('#usuario').val();
+            var pass = $('#password').val();
+            $.ajax({
+                url: 'validar.php',
+                type: 'POST',
+                data: { usuario: user, password: pass }
+            }).done(function(resp) {switch (parseInt(resp)) {
+                switch (parseInt(resp)) {
+                    case 1:
+                        location.href ='./principal_avanzado.php';
+                        break;
+                    case 2:
+                        location.href = './principal_medio.php';
+                        break;
+                    case 3:
+                        location.href = './principal_basico.php';
+                        break;
+                    default : $("#result").html("<strong>¡Error!</strong>Usuario o contrase~na incorrectos.");
+
+                }
+           });
+       }
+    </script>
 </body>
 </html>
